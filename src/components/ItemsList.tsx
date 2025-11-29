@@ -1,6 +1,6 @@
-import { Check, X } from "lucide-react";
 import { useState } from "react";
 import { StatusBadge } from "./StatusBadge";
+import SearchBox from "./reusable/SearchBox";
 
 export const ItemsList = ({
   analysisData,
@@ -20,7 +20,7 @@ export const ItemsList = ({
     <div className="bg-white/90 backdrop-blur-sm border border-purple-200 rounded-xl p-3 h-[600px] flex flex-col shadow-lg">
       <div className="mb-4 pb-3 border-b border-purple-200">
         <span className="text-gray-900 text-lg font-medium">Obligations</span>
-        <div className="flex items-center gap-2 text-sm mt-3">
+        {/* <div className="flex items-center gap-2 text-sm mt-3">
           <span className="inline-flex items-center gap-2 px-1.5 py-1.5 bg-green-50 text-green-700 rounded-lg border border-green-200 shadow-sm">
             <Check className="w-6 h-6" />3 Compliant
           </span>
@@ -28,18 +28,12 @@ export const ItemsList = ({
           <span className="inline-flex items-center gap-2 px-1.5 py-1.5 bg-red-50 text-red-700 rounded-lg border border-red-200 shadow-sm">
             <X className="w-6 h-6" />3 Non Compliant
           </span>
-        </div>
+        </div> */}
       </div>
 
       {/* Filter/Search Section */}
       <div className="mb-3">
-        <input
-          type="text"
-          placeholder="Search obligations..."
-          className="w-full px-3 py-2 border border-purple-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
-          value={searchText}
-          onChange={handleChange}
-        />
+        <SearchBox searchText={searchText} setSearchText={setSearchText} />
       </div>
 
       <div

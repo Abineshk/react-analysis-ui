@@ -2,7 +2,12 @@ import { ExternalLink, FileText } from "lucide-react";
 import { useEffect, useState } from "react";
 import { PdfViewer } from "./PdfViewer";
 
-export function PdfContainer({ analysisData, file, selectedClause }: any) {
+export function PdfContainer({
+  analysisData,
+  file,
+  selectedClause,
+  defaultScale,
+}: any) {
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -32,7 +37,11 @@ export function PdfContainer({ analysisData, file, selectedClause }: any) {
       </div>
       <div className="flex-1 bg-white rounded border border-purple-300 overflow-hidden relative shadow-inner">
         {pdfUrl ? (
-          <PdfViewer url={pdfUrl} selectedClause={selectedClause} />
+          <PdfViewer
+            url={pdfUrl}
+            selectedClause={selectedClause}
+            defaultScale={defaultScale}
+          />
         ) : (
           <div className="flex items-center justify-center h-full">
             <p className="text-gray-900">

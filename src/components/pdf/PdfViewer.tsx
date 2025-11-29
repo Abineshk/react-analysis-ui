@@ -12,7 +12,11 @@ import "@react-pdf-viewer/search/lib/styles/index.css";
 import "@react-pdf-viewer/toolbar/lib/styles/index.css";
 import "./pdf.css";
 
-export const PdfViewer = ({ url, selectedClause }: any) => {
+export const PdfViewer = ({
+  url,
+  selectedClause,
+  defaultScale = 0.75,
+}: any) => {
   const highlightPluginInstance = highlightPlugin({
     trigger: Trigger.None,
   });
@@ -53,7 +57,7 @@ export const PdfViewer = ({ url, selectedClause }: any) => {
         <Toolbar />
       </div>
       <Viewer
-        defaultScale={0.75}
+        defaultScale={defaultScale}
         fileUrl={url}
         renderLoader={(percentages: number) => (
           <div style={{ width: "240px" }}>

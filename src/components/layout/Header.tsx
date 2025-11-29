@@ -31,7 +31,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className="bg-white/80 backdrop-blur-lg border-b border-purple-100 shadow-sm sticky top-0 z-50">
+    <header className="bg-white/80 backdrop-blur-lg border-b border-purple-100 shadow-sm z-50">
       <div className="max-w-7xl mx-auto px-6 py-2">
         <div className="flex items-center justify-between">
           <span className="flex gap-2 items-center">

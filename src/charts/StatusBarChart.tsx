@@ -58,7 +58,7 @@ const StatusBarChart: React.FC<StatusBarChartProps> = ({ data }) => {
 
           <Bar
             dataKey="value"
-            barSize={25}
+            barSize={20}
             radius={[0, 10, 10, 0]}
             isAnimationActive={visible} // enable animation
             animationDuration={5000}

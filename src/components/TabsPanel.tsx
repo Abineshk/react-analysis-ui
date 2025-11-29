@@ -23,7 +23,7 @@ export function TabsPanel({
     return { color: "text-green-600", text: "Good" };
   };
 
-  const scoreConent = getScoreContent(93);
+  const scoreContent = getScoreContent(93);
 
   const changeClause = (clause: string) => {
     setSelectedClause(clause);
@@ -106,8 +106,8 @@ export function TabsPanel({
                       <span className="text-2xl" style={{ color: "#A100FF" }}>
                         93.8%
                       </span>
-                      <span className={`text-sm ${scoreConent.color}`}>
-                        {scoreConent.text}
+                      <span className={`text-sm ${scoreContent.color}`}>
+                        {scoreContent.text}
                       </span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
@@ -118,7 +118,7 @@ export function TabsPanel({
                     </div>
                   </div>
                   <p className="text-gray-600 text-sm">
-                    Overall similarity is {scoreConent.text} with a high
+                    Overall similarity is {scoreContent.text} with a high
                     accuracy rate. Minor issues detected in formatting and
                     completeness.
                   </p>

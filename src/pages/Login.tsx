@@ -1,11 +1,9 @@
 import { User } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export const Login = () => {
   const { login, username } = useAuth();
-  const navigate = useNavigate();
 
   const [name, setName] = useState("");
 

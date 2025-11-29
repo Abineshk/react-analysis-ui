@@ -1,46 +1,71 @@
-import { ExternalLink, FileText } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Pdf } from "./Pdf";
+import { useCallback, useEffect } from "react";
+// Import the main component
+import { Viewer, Worker } from "@react-pdf-viewer/core";
+import { highlightPlugin, Trigger } from "@react-pdf-viewer/highlight";
+import { searchPlugin } from "@react-pdf-viewer/search";
+import { toolbarPlugin } from "@react-pdf-viewer/toolbar";
+import { Progress } from "../reusable/Progress";
 
-export function PdfViewer({ analysisData, file, selectedClause }: any) {
-  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+// Import the styles
+import "@react-pdf-viewer/core/lib/styles/index.css";
+import "@react-pdf-viewer/search/lib/styles/index.css";
+import "@react-pdf-viewer/toolbar/lib/styles/index.css";
+import "./pdf.css";
+
+export const PdfViewer = ({ url, selectedClause }: any) => {
+  const highlightPluginInstance = highlightPlugin({
+    trigger: Trigger.None,
+  });
+
+  const toolbarPluginInstance = toolbarPlugin();
+  const { Toolbar } = toolbarPluginInstance;
+
+  const searchPluginInstance = searchPlugin();
+  const { highlight, clearHighlights } = searchPluginInstance;
+
+  const splitByNewline = useCallback(
+    (text: string) =>
+      text
+        .split(/\r?\n/) // splits on \n or \r\n
+        .map((line) => line.trim()) // optional: remove leading/trailing spaces
+        .filter((line) => line.length > 0), // remove empty lines
+    []
+  );
 
   useEffect(() => {
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setPdfUrl(url);
-      return () => URL.revokeObjectURL(url);
+    clearHighlights();
+    if (selectedClause) {
+      const clauseList = splitByNewline(selectedClause);
+      highlight(clauseList);
     }
-  }, [file]);
+  }, [selectedClause, splitByNewline]);
 
+  if (!url) return null;
   return (
-    <div className="bg-white/90 backdrop-blur-sm border border-purple-200 rounded-xl p-3 h-[600px] flex flex-col shadow-lg">
-      <div className="flex justify-between items-center mb-4 pb-3 border-b border-purple-200">
-        <span className="text-xl flex items-center gap-2">
-          <FileText className="w-5 h-5 text-purple-600" />
-          <span className="text-gray-900 text-lg font-medium">
-            Contract Preview
-          </span>
-        </span>
-        <a
-          href={analysisData?.contract_url}
-          target="_blank"
-          className="text-md text-blue-600 hover:text-blue-800 flex items-center gap-1 font-medium cursor-pointer"
-        >
-          Open Original <ExternalLink size={12} />
-        </a>
+    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+      <div
+        style={{
+          borderBottom: "1px solid #ccc",
+          padding: "4px",
+          background: "#f8f8f8",
+        }}
+      >
+        <Toolbar />
       </div>
-      <div className="flex-1 bg-white rounded border border-purple-300 overflow-hidden relative shadow-inner">
-        {pdfUrl ? (
-          <Pdf url={pdfUrl} selectedClause={selectedClause} />
-        ) : (
-          <div className="flex items-center justify-center h-full">
-            <p className="text-gray-900">
-              {analysisData?.full_text || "No pdf loaded."}
-            </p>
+      <Viewer
+        defaultScale={0.75}
+        fileUrl={url}
+        renderLoader={(percentages: number) => (
+          <div style={{ width: "240px" }}>
+            <Progress progress={Math.round(percentages)} />
           </div>
         )}
-      </div>
-    </div>
+        plugins={[
+          highlightPluginInstance,
+          toolbarPluginInstance,
+          searchPluginInstance,
+        ]}
+      />
+    </Worker>
   );
-}
+};

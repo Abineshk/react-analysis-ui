@@ -1,25 +1,31 @@
-import React from "react";
-
 interface StatCardProps {
-  title: string; // Label, e.g., "Users"
-  value: number | string; // Value to display
-  children?: React.ReactNode; // Optional icon
-  color?: string; // Tailwind text color for value
+  label: string;
+  value: string | number;
+  fromColor: string;
+  toColor: string;
+  labelColor: string;
+  icon: React.ReactNode;
 }
 
 const StatCard: React.FC<StatCardProps> = ({
-  title,
+  label,
   value,
-  children,
-  color = "text-gray-900",
+  fromColor,
+  toColor,
+  labelColor,
+  icon,
 }) => {
   return (
-    <div className="bg-white shadow-md rounded-lg p-10 flex items-center space-x-4 justify-center hover:scale-105 hover:bg-white/40 transition-all duration-300">
-      {children}
-      <div>
-        <p className="text-xl mb-2">{title}</p>
-        <p className={`text-2xl font-semibold ${color} text-center`}>{value}</p>
+    <div
+      className={`bg-linear-to-br ${fromColor} ${toColor} rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-shadow`}
+    >
+      <div className="flex items-center justify-between mb-2">
+        <span className={`${labelColor} text-sm`}>{label}</span>
+        <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+          <span className="text-2xl">{icon}</span>
+        </div>
       </div>
+      <p className="text-3xl">{value}</p>
     </div>
   );
 };

@@ -7,7 +7,7 @@ import {
   UserCircle,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 export function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

@@ -1,21 +1,11 @@
 import { useState } from "react";
-import {
-  Bar,
-  BarChart,
-  Cell,
-  LabelList,
-  Legend,
-  PolarAngleAxis,
-  RadialBar,
-  RadialBarChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import RadialHealthChart from "../charts/RadialHealthChart";
+import StatusBarChart from "../charts/StatusBarChart";
 import { ItemsList } from "./ItemsList";
+import { PdfContainer } from "./pdf/PdfContainer";
+import ChartContainer from "./reusable/ChartContainer";
+import StatCard from "./StatCard";
 import { TabsPanel } from "./TabsPanel";
-import { PdfViewer } from "./pdf/PdfViewer";
 
 interface AnalysisResultsProps {
   pdfFile: File | null;
@@ -149,163 +139,48 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-linear-to-br from-purple-500 to-purple-600 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-purple-100 text-sm">Total Obligations</span>
-              <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                <span className="text-2xl">📊</span>
-              </div>
-            </div>
-            <p className="text-3xl">200</p>
-          </div>
-
-          <div className="bg-linear-to-br from-green-500 to-green-600 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-green-100 text-sm">Compliant Items</span>
-              <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                <span className="text-2xl">✓</span>
-              </div>
-            </div>
-            <p className="text-3xl">150</p>
-          </div>
-
-          <div className="bg-linear-to-br from-red-500 to-red-600 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-red-100 text-sm">Errors Found</span>
-              <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                <span className="text-2xl">⚠</span>
-              </div>
-            </div>
-            <p className="text-3xl">50</p>
-          </div>
-
-          <div className="bg-linear-to-br from-blue-500 to-blue-600 rounded-xl p-5 text-white shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-blue-100 text-sm">Processing Time</span>
-              <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                <span className="text-2xl">⚡</span>
-              </div>
-            </div>
-            <p className="text-3xl">3.2s</p>
-          </div>
+          <StatCard
+            label="Total Obligations"
+            value={200}
+            fromColor="from-purple-500"
+            toColor="to-purple-600"
+            labelColor="text-purple-100"
+            icon="📊"
+          />
+          <StatCard
+            label="Compliant Items"
+            value={150}
+            fromColor="from-green-500"
+            toColor="to-green-600"
+            labelColor="text-green-100"
+            icon="✓"
+          />
+          <StatCard
+            label="Non Compliant Items"
+            value={50}
+            fromColor="from-red-500"
+            toColor="to-red-600"
+            labelColor="text-red-100"
+            icon="⚠"
+          />
+          <StatCard
+            label="Processing Time"
+            value="3.2s"
+            fromColor="from-blue-500"
+            toColor="to-blue-600"
+            labelColor="text-blue-100"
+            icon="⚡"
+          />
         </div>
         {/* Charts Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-linear-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-xl p-6 min-h-[300px] flex items-center justify-center shadow-md hover:shadow-xl transition-shadow">
-            <div className="w-full h-full">
-              <span className="text-xl text-purple-600">Overall Health</span>
-              <div
-                id="chart-1"
-                className="h-[200px] relative hover:scale-105 transition-all duration-300"
-              >
-                {/* Center Text */}
-                <div className="absolute flex items-center justify-center w-full h-full">
-                  <span className="text-3xl font-semibold text-gray-800">
-                    75%
-                  </span>
-                </div>
+          <ChartContainer title="Overall Health">
+            <RadialHealthChart value={75} radialData={radialData} />
+          </ChartContainer>
 
-                {/* Center Text */}
-                <div className="absolute flex items-center justify-center w-full h-75">
-                  <span className="text-xl font-semibold text-gray-800">
-                    Score
-                  </span>
-                </div>
-
-                <ResponsiveContainer>
-                  <RadialBarChart
-                    cx="50%"
-                    cy="60%"
-                    innerRadius="80%"
-                    barSize={20}
-                    data={radialData}
-                    startAngle={180}
-                    endAngle={0}
-                  >
-                    <PolarAngleAxis
-                      type="number"
-                      domain={[0, 100]} // Full scale
-                      angleAxisId={0}
-                      tick={false}
-                    />
-                    <RadialBar
-                      background
-                      dataKey="value"
-                      cornerRadius={5}
-                      isAnimationActive={true} // enable animation
-                      animationDuration={3000}
-                    />
-                    <Tooltip />
-                  </RadialBarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
-          <div className="bg-linear-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-xl p-6 min-h-[300px] flex items-center justify-center shadow-md hover:shadow-xl transition-shadow">
-            <div className="w-full h-full">
-              <span className="text-xl text-purple-600">
-                Compliance Status Distribution
-              </span>
-              <div
-                id="chart-1"
-                className="w-full h-[200px] hover:scale-105 hover:bg-white/40 transition-all duration-300 mt-2"
-              >
-                <ResponsiveContainer>
-                  <BarChart
-                    data={statusData}
-                    layout="vertical" // left → right
-                    margin={{ top: 10, right: 10, left: 10, bottom: 20 }}
-                  >
-                    {/* X-axis shows percentages */}
-                    <XAxis type="number" hide />
-
-                    {/* Y-axis shows Pass / Fail */}
-                    <YAxis
-                      type="category"
-                      dataKey="name"
-                      tickLine={false}
-                      tick={false}
-                      mirror
-                    />
-
-                    <Tooltip cursor={{ fill: "#f1f5f9" }} />
-
-                    <Bar
-                      dataKey="value"
-                      barSize={25}
-                      radius={[0, 10, 10, 0]}
-                      isAnimationActive={true} // enable animation
-                      animationDuration={3000}
-                    >
-                      {statusData.map((entry, index) => (
-                        <Cell key={index} fill={entry.fill} />
-                      ))}
-
-                      {/* Center Text */}
-                      <LabelList
-                        dataKey="value"
-                        position="center"
-                        formatter={(value: string) => `${value}`}
-                        fill="#fff"
-                        fontSize={12}
-                      />
-                    </Bar>
-
-                    {/* Custom Legend */}
-                    <Legend
-                      verticalAlign="bottom"
-                      height={40}
-                      payload={statusData.map((data) => ({
-                        color: data.fill,
-                        value: data.name,
-                        type: "circle",
-                      }))}
-                    />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
+          <ChartContainer title="Compliance Status Distribution">
+            <StatusBarChart data={statusData} />
+          </ChartContainer>
         </div>
 
         {/* Three Column Layout */}
@@ -321,7 +196,7 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
 
           {/* Center: PDF Viewer */}
           <div className="lg:col-span-5">
-            <PdfViewer file={pdfFile} selectedClause={selectedClause} />
+            <PdfContainer file={pdfFile} selectedClause={selectedClause} />
           </div>
 
           {/* Right: Tabs Panel */}

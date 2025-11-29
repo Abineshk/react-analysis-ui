@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { AnalysisResults } from "../components/AnalysisResults";
 import { FileUpload } from "../components/FileUpload";
-import { ProgressBar } from "../components/ProgressBar";
+import { ProgressBar } from "../components/reusable/ProgressBar";
 
-export const Dashboard = () => {
+export const Home = () => {
   const [excelFile, setExcelFile] = useState<File | null>(null);
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -43,6 +43,9 @@ export const Dashboard = () => {
   };
   return (
     <div>
+      {/* Progress Bar */}
+      {isAnalyzing && <ProgressBar progress={progress} />}
+
       {/* Upload Section */}
       <div className="">
         <FileUpload
@@ -57,11 +60,8 @@ export const Dashboard = () => {
         />
       </div>
 
-      {/* Progress Bar */}
-      {isAnalyzing && <ProgressBar progress={progress} />}
-
       {/* Analysis Results */}
-      {showResults && (
+      {!isAnalyzing && showResults && (
         <div className="mt-8">
           <AnalysisResults pdfFile={pdfFile} />
         </div>

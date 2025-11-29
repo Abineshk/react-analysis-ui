@@ -25,7 +25,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (storedUser) {
       setLoading(false);
       setUsername(storedUser);
-      navigate("/dashboard");
+      navigate("/");
+    } else {
+      setLoading(false);
+      navigate("/login");
     }
   }, []);
 
@@ -34,14 +37,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.setItem("username", user);
     setLoading(false);
     setUsername(user);
-    navigate("/dashboard");
+    navigate("/");
   };
 
   // Logout function
   const logout = () => {
     localStorage.removeItem("username");
     setUsername(null);
-    navigate("/");
+    navigate("/login");
   };
 
   return (

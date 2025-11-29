@@ -1,21 +1,21 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
-import { Dashboard } from "./pages/Dashboard";
+import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
+import { ProtectedRoute } from "./route/ProtectedRoute";
 
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route
-            path="/dashboard"
+            path="*"
             element={
               <ProtectedRoute>
                 <div className="max-w-7xl mx-auto p-6">
-                  <Dashboard />
+                  <Home />
                 </div>
               </ProtectedRoute>
             }

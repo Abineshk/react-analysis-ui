@@ -19,18 +19,18 @@ export const Login = () => {
       {/* Left Pane - Branding */}
       <div className="flex flex-col justify-center p-20 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-        <div className="relative z-10">
+        <div className="relative">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/30 border border-indigo-400/30 mb-6">
             <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-            <span className="text-xs font-semibold tracking-wide">
+            <span className="text-md font-semibold tracking-wide">
               v2.5 Enterprise
             </span>
           </div>
-          <h1 className="text-5xl font-bold mb-6 leading-tight">
+          <h1 className="text-6xl font-bold mb-6 leading-tight">
             Contract Intelligence <br />
             Platform
           </h1>
-          <p className="text-indigo-100 text-lg max-w-md leading-relaxed">
+          <p className="text-indigo-100 text-xl max-w-md leading-relaxed">
             Automated compliance verification powered by advanced RAG
             technology.
             <br />

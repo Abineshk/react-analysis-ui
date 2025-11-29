@@ -158,7 +158,7 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
 
   return (
     <div>
-      <div className="pt-2 bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-purple-100 p-8">
+      <div className="pt-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-purple-100 p-8">
         <div className="flex items-center justify-between mb-6">
           <span className="bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent text-2xl">
             Analysis Results

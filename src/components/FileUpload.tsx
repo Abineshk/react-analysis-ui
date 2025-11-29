@@ -55,7 +55,7 @@ export function FileUpload({
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-purple-100 p-10">
       <div className="flex flex-col justify-center relative overflow-hidden">
-        <div className="relative z-10">
+        <div className="relative">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/30 border border-indigo-400/30 mb-6">
             <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
             <span className="text-xs font-semibold tracking-wide">

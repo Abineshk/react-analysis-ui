@@ -5,6 +5,7 @@ import StatusBarChart from "../charts/StatusBarChart";
 import { ItemsList } from "./ItemsList";
 import { PdfContainer } from "./pdf/PdfContainer";
 import ChartContainer from "./reusable/ChartContainer";
+import { ScoreBar } from "./reusable/ScoreBar";
 import SearchBox from "./reusable/SearchBox";
 import StatCard from "./StatCard";
 import { StatusBadge } from "./StatusBadge";
@@ -293,18 +294,20 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
                       >
                         <div className="flex justify-between items-center">
                           <div>
-                            <StatusBadge status={item.is_present} />
-                            <span className="text-md text-slate-600 font-mono ml-4">
-                              ID: {item.id}
+                            <span className="text-md text-slate-600 font-mono mr-4">
+                              Id: {item.id}
                             </span>
+                            <StatusBadge status={item.is_present} />
                           </div>
                           <div className="flex items-center">
-                            <span className="text-[12px] pr-3 font-medium text-slate-600">
+                            {/* <span className="text-[12px] pr-3 font-medium text-slate-600">
                               {item.confidence}%
-                            </span>
+                            </span> */}
                             <svg
-                              className={`h-6 w-6 text-gray-600 transform transition-transform duration-300 ${
-                                openItemId === item.id ? "rotate-180" : ""
+                              className={`h-6 w-6 ml-2 text-gray-600 transform transition-transform duration-300 ${
+                                openItemId === item.id
+                                  ? "rotate-180 text-purple-600"
+                                  : ""
                               }`}
                               fill="none"
                               stroke="currentColor"
@@ -338,167 +341,223 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
                             : "max-h-0 p-0"
                         } overflow-hidden bg-gray-50`}
                       >
-                        {/* Tabs */}
-                        {/* <div className="flex gap-4 mb-4 border-b border-gray-200 overflow-x-auto whitespace-nowrap">
-                          {["details", "evidence", "suggestion"].map((tab) => (
-                            <button
-                              key={tab}
-                              className={`pb-2 text-sm font-medium transition-colors cursor-pointer ${
-                                selectedTab === tab
-                                  ? "border-b-2 border-purple-600 text-purple-600"
-                                  : "border-b-2 border-transparent text-gray-600 hover:text-purple-600 hover:border-purple-300"
-                              }`}
-                              onClick={() => handleChangeTab(tab)}
-                            >
-                              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                            </button>
-                          ))}
-                        </div> */}
-
-                        {/* New Tabs */}
-                        <div className="flex gap-1 mb-4 bg-purple-100 rounded-lg p-1 mt-1">
-                          {["details", "evidence", "suggestion"].map((tab) => (
-                            <button
-                              key={tab}
-                              className={`flex-1 px-4 py-2 rounded-lg transition-all relative cursor-pointer ${
-                                selectedTab === tab
-                                  ? "bg-white text-purple-600 shadow-md"
-                                  : "text-gray-600 hover:text-gray-900 hover:bg-purple-100"
-                              }`}
-                              onClick={() => handleChangeTab(tab)}
-                            >
-                              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                              {tab === "suggestion" && (
-                                <span className="absolute -top-1 -right-1 w-5 h-5 bg-amber-500 text-white rounded-full text-xs flex items-center justify-center">
-                                  1
-                                </span>
-                              )}
-                            </button>
-                          ))}
-                        </div>
-
-                        {/* Tab Content */}
-                        {selectedTab === "details" && (
-                          <div className="space-y-4 fade-in">
-                            <div className="p-4 bg-purple-50 rounded-xl border border-purple-200 shadow-sm">
-                              <span className="text-xs font-bold text-indigo-600 uppercase mb-2 flex items-center gap-2">
-                                <Cpu size={14} /> Analysis Reasoning
-                              </span>
-                              <p className="text-sm text-slate-600 leading-relaxed">
-                                {selectedObligation?.reason}
-                              </p>
-                            </div>
-
-                            <div className="p-4 bg-purple-50 rounded-xl border border-purple-200 shadow-sm">
-                              <span className="text-gray-900 mb-2">
-                                Similarity Score
-                              </span>
-                              <div className="mb-3">
-                                <div className="flex items-center justify-between mb-1">
-                                  <span
-                                    className="text-2xl"
-                                    style={{ color: "#A100FF" }}
-                                  >
-                                    93.8%
-                                  </span>
-                                  <span
-                                    className={`text-sm ${scoreContent.color}`}
-                                  >
-                                    {scoreContent.text}
-                                  </span>
-                                </div>
-                                <div className="w-full bg-gray-200 rounded-full h-2">
-                                  <div
-                                    className="h-2 rounded-full"
-                                    style={{
-                                      width: "93.8%",
-                                      backgroundColor: "#A100FF",
-                                    }}
-                                  />
-                                </div>
-                              </div>
-                              <p className="text-gray-600 text-sm">
-                                Overall similarity is {scoreContent.text} with a
-                                high accuracy rate.
-                              </p>
-                            </div>
-
-                            <span className="text-gray-900 mb-2 p-3 flex justify-between">
-                              <span>Keywords Matched</span>
-                              <span>
-                                {selectedObligation?.keyword_hits.length}
-                              </span>
-                            </span>
-                          </div>
-                        )}
-
-                        {selectedTab === "evidence" && (
-                          <div className="space-y-4 fade-in">
-                            {selectedObligation &&
-                            selectedObligation?.supporting_clauses?.length >
-                              0 ? (
-                              selectedObligation.supporting_clauses.map(
-                                (clause, i) => (
+                        {openItemId === item.id && (
+                          <div className="border border-gray-50 rounded-xl mb-2 mt-2 p-2 bg-white shadow-sm">
+                            {/* Tabs design */}
+                            <div className="flex mb-4 mt-2">
+                              {["details", "evidence", "suggestion"].map(
+                                (tab) => (
                                   <button
-                                    key={i}
-                                    onClick={() => changeClause(clause)}
-                                    className={`relative p-4 rounded-xl cursor-pointer transition-all duration-300 block w-full
+                                    key={tab}
+                                    className={`cursor-pointer flex-1 relative items-center px-4 py-2 rounded-t-md rounded-b-none border fs-[20px] transition hover:bg-blue-50 ${
+                                      selectedTab === tab
+                                        ? "border-2 border-blue-500 border-b-transparent -mt-1"
+                                        : "border-b-blue-500 border-transparent"
+                                    }`}
+                                    onClick={() => handleChangeTab(tab)}
+                                  >
+                                    {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                                    {tab === "suggestion" && (
+                                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-amber-500 text-white rounded-full text-xs flex items-center justify-center">
+                                        1
+                                      </span>
+                                    )}
+                                  </button>
+                                )
+                              )}
+                            </div>
+
+                            {/* Tabs */}
+                            {/* <div className="flex mb-4 mt-2 border-b border-gray-300 overflow-x-auto whitespace-nowrap m-1">
+                            {["details", "evidence", "suggestion"].map(
+                              (tab) => (
+                                <button
+                                  key={tab}
+                                  className={`pb-1 px-2 text-sm font-medium transition-colors cursor-pointer ${
+                                    selectedTab === tab
+                                      ? "border-b-2 border-purple-600 text-purple-600"
+                                      : "border-b-2 border-transparent text-gray-600 hover:text-purple-600 hover:border-purple-300"
+                                  }`}
+                                  onClick={() => handleChangeTab(tab)}
+                                >
+                                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                                </button>
+                              )
+                            )}
+                          </div> */}
+
+                            {/* New Tabs */}
+                            {/* <div className="flex gap-1 mb-4 bg-purple-100 rounded-lg p-1 mt-1">
+                            {["details", "evidence", "suggestion"].map(
+                              (tab) => (
+                                <button
+                                  key={tab}
+                                  className={`flex-1 px-4 py-2 rounded-lg transition-all relative cursor-pointer ${
+                                    selectedTab === tab
+                                      ? "bg-white text-purple-600 shadow-md"
+                                      : "text-gray-600 hover:text-gray-900 hover:bg-purple-100"
+                                  }`}
+                                  onClick={() => handleChangeTab(tab)}
+                                >
+                                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                                  {tab === "suggestion" && (
+                                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-amber-500 text-white rounded-full text-xs flex items-center justify-center">
+                                      1
+                                    </span>
+                                  )}
+                                </button>
+                              )
+                            )}
+                          </div> */}
+
+                            {/* Tab Content */}
+                            <div className="p-1">
+                              {selectedTab === "details" && (
+                                <div className="space-y-4 fade-in">
+                                  <div className="p-4 bg-purple-50 rounded-xl border border-purple-200 shadow-sm">
+                                    <span className="text-xs font-bold text-indigo-600 uppercase mb-2 flex items-center gap-2">
+                                      <Cpu size={14} /> Analysis Reasoning
+                                    </span>
+                                    <p className="text-sm text-slate-600 leading-relaxed">
+                                      {selectedObligation?.reason}
+                                    </p>
+                                  </div>
+
+                                  <div className="p-4 bg-purple-50 rounded-xl border border-purple-200 shadow-sm">
+                                    <span className="text-gray-900 mb-2">
+                                      Confidence Score
+                                    </span>
+                                    <div className="mb-3">
+                                      <div className="flex items-center justify-between mb-1">
+                                        <span
+                                          className="text-2xl"
+                                          style={{ color: "#A100FF" }}
+                                        >
+                                          50%
+                                        </span>
+                                        <span
+                                          className={`text-sm ${scoreContent.color}`}
+                                        >
+                                          {scoreContent.text}
+                                        </span>
+                                      </div>
+                                      <ScoreBar percentage="50%" />
+                                    </div>
+                                    <p className="text-gray-600 text-sm">
+                                      Overall similarity is {scoreContent.text}{" "}
+                                      with a high accuracy rate.
+                                    </p>
+                                  </div>
+
+                                  <div className="p-4 bg-purple-50 rounded-xl border border-purple-200 shadow-sm">
+                                    <span className="text-gray-900 mb-2">
+                                      Similarity Score
+                                    </span>
+                                    <div className="mb-3">
+                                      <div className="flex items-center justify-between mb-1">
+                                        <span
+                                          className="text-2xl"
+                                          style={{ color: "#A100FF" }}
+                                        >
+                                          93.8%
+                                        </span>
+                                        <span
+                                          className={`text-sm ${scoreContent.color}`}
+                                        >
+                                          {scoreContent.text}
+                                        </span>
+                                      </div>
+                                      <ScoreBar percentage="93.8%" />
+                                    </div>
+                                    <p className="text-gray-600 text-sm">
+                                      Overall similarity is {scoreContent.text}{" "}
+                                      with a high accuracy rate.
+                                    </p>
+                                  </div>
+
+                                  <span className="text-gray-900 mb-2 p-3 flex justify-between">
+                                    <span>Keywords Matched</span>
+                                    <span>
+                                      {selectedObligation?.keyword_hits.length}
+                                    </span>
+                                  </span>
+                                </div>
+                              )}
+
+                              {selectedTab === "evidence" && (
+                                <div className="space-y-4 fade-in">
+                                  {selectedObligation &&
+                                  selectedObligation?.supporting_clauses
+                                    ?.length > 0 ? (
+                                    selectedObligation.supporting_clauses.map(
+                                      (clause, i) => (
+                                        <button
+                                          key={i}
+                                          onClick={() => changeClause(clause)}
+                                          className={`relative p-4 rounded-xl cursor-pointer transition-all duration-300 block w-full
                           ${
                             selectedClause === clause
                               ? "bg-white border-l-4 border-green-500 shadow-lg"
                               : "bg-white/70 hover:bg-white hover:shadow-md border-l-4 border-indigo-300 hover:border-indigo-500"
                           }`}
-                                  >
-                                    <div className="flex justify-between mb-2">
-                                      <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-wider">
-                                        Clause Reference {i + 1}
-                                      </span>
-                                      <CheckCircle
-                                        height={30}
-                                        width={30}
-                                        className={`${
-                                          selectedClause === clause
-                                            ? "text-green-600"
-                                            : "text-gray-400"
-                                        } transition-all duration-300`}
+                                        >
+                                          <div className="flex justify-between mb-2">
+                                            <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-wider">
+                                              Clause Reference {i + 1}
+                                            </span>
+                                            <CheckCircle
+                                              height={30}
+                                              width={30}
+                                              className={`${
+                                                selectedClause === clause
+                                                  ? "text-green-600"
+                                                  : "text-gray-400"
+                                              } transition-all duration-300`}
+                                            />
+                                          </div>
+                                          <p className="text-sm text-slate-600 italic pt-1 text-left">
+                                            "{clause}"
+                                          </p>
+                                        </button>
+                                      )
+                                    )
+                                  ) : (
+                                    <div className="text-center py-12 text-slate-400 text-sm flex flex-col items-center">
+                                      <FileX
+                                        size={32}
+                                        className="mb-3 opacity-50"
                                       />
+                                      No direct evidence found in the document.
                                     </div>
-                                    <p className="text-sm text-slate-600 italic pt-1 text-left">
-                                      "{clause}"
-                                    </p>
-                                  </button>
-                                )
-                              )
-                            ) : (
-                              <div className="text-center py-12 text-slate-400 text-sm flex flex-col items-center">
-                                <FileX size={32} className="mb-3 opacity-50" />
-                                No direct evidence found in the document.
-                              </div>
-                            )}
-                          </div>
-                        )}
+                                  )}
+                                </div>
+                              )}
 
-                        {selectedTab === "suggestion" && (
-                          <div className="fade-in">
-                            {selectedObligation?.suggestion ? (
-                              <div className="p-4 bg-yellow-50 rounded-xl border border-yellow-200 shadow-sm">
-                                <h4 className="text-md text-amber-600 mb-3 flex items-center gap-2">
-                                  <Lightbulb name="Lightbulb" size={20} />{" "}
-                                  Recommendation
-                                </h4>
-                                <p className="text-sm leading-relaxed">
-                                  {selectedObligation.suggestion}
-                                </p>
-                              </div>
-                            ) : (
-                              <div className="text-center py-12 text-slate-600 text-md flex flex-col items-center">
-                                <CheckCircle
-                                  size={32}
-                                  className="mb-3 text-green-600 opacity-60"
-                                />
-                                Obligation is fully compliant. No action needed.
-                              </div>
-                            )}
+                              {selectedTab === "suggestion" && (
+                                <div className="fade-in">
+                                  {selectedObligation?.suggestion ? (
+                                    <div className="p-4 bg-yellow-50 rounded-xl border border-yellow-200 shadow-sm">
+                                      <h4 className="text-md text-amber-600 mb-3 flex items-center gap-2">
+                                        <Lightbulb name="Lightbulb" size={20} />{" "}
+                                        Recommendation
+                                      </h4>
+                                      <p className="text-sm leading-relaxed">
+                                        {selectedObligation.suggestion}
+                                      </p>
+                                    </div>
+                                  ) : (
+                                    <div className="text-center py-12 text-slate-600 text-md flex flex-col items-center">
+                                      <CheckCircle
+                                        size={32}
+                                        className="mb-3 text-green-600 opacity-60"
+                                      />
+                                      Obligation is fully compliant. No action
+                                      needed.
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                            </div>
                           </div>
                         )}
                       </div>

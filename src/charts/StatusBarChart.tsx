@@ -9,7 +9,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useChartVisible } from "../hooks/usChartVisible";
+import { useChartVisible } from "../hooks/useChartVisible";
 
 interface StatusItem {
   name: string;

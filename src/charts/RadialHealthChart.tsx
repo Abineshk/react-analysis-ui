@@ -4,7 +4,7 @@ import {
   RadialBarChart,
   ResponsiveContainer,
 } from "recharts";
-import { useChartVisible } from "../hooks/usChartVisible";
+import { useChartVisible } from "../hooks/useChartVisible";
 
 interface RadialHealthChartProps {
   value: number; // score percentage

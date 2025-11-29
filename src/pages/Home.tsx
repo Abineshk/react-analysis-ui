@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { AnalysisResults } from "../components/AnalysisResults";
 import { FileUpload } from "../components/FileUpload";
@@ -10,7 +11,7 @@ export const Home = () => {
   const [progress, setProgress] = useState(0);
   const [showResults, setShowResults] = useState(false); // Set to true to show dummy data
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
     if (!excelFile || !pdfFile) {
       alert("Please upload both Excel and PDF files");
       return;
@@ -20,18 +21,28 @@ export const Home = () => {
     setProgress(0);
     setShowResults(false);
 
-    // Simulate analysis progress
+    // Start simulated progress
     const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsAnalyzing(false);
-          setShowResults(true);
-          return 100;
-        }
-        return prev + 10;
-      });
+      setProgress((p) => (p < 95 ? p + 5 : p)); // stop at 95%
     }, 300);
+
+    try {
+      const res = await axios.get("https://dummyjson.com/products");
+      console.log(res.data);
+
+      setTimeout(() => {
+        // API done → finish progress
+        clearInterval(interval);
+
+        setProgress(100);
+        setIsAnalyzing(false);
+        setShowResults(true);
+      }, 6000);
+    } catch (err) {
+      console.log(err);
+      clearInterval(interval);
+      setIsAnalyzing(false);
+    }
   };
 
   const handleReset = () => {

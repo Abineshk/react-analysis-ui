@@ -1,0 +1,19 @@
+.rpv-search__highlights {
+  background: transparent !important;
+}
+
+/* All highlight background colors become yellow */
+[class*="rpv-search__highlight-"] {
+  background-color: #ffff0066 !important;
+  color: black !important;
+}
+
+/* override active (green) highlight */
+.rpv-search__highlight--current {
+  background-color: #ffff0066 !important;
+  color: black !important;
+}
+
+.rpv-core__viewer {
+  scroll-padding-top: 100px; /* leaves space above highlighted text */
+}

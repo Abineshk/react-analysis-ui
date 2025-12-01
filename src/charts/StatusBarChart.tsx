@@ -43,7 +43,7 @@ const StatusBarChart: React.FC<StatusBarChartProps> = ({ data }) => {
         <BarChart
           data={data}
           layout="vertical"
-          margin={{ top: 10, right: 10, left: 10, bottom: 20 }}
+          margin={{ top: 10, right: 10, left: 10, bottom: 50 }}
         >
           <XAxis type="number" hide />
           <YAxis
@@ -58,7 +58,7 @@ const StatusBarChart: React.FC<StatusBarChartProps> = ({ data }) => {
 
           <Bar
             dataKey="value"
-            barSize={20}
+            barSize={18}
             radius={[0, 10, 10, 0]}
             isAnimationActive={visible} // enable animation
             animationDuration={5000}

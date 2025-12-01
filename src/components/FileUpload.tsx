@@ -53,17 +53,19 @@ export function FileUpload({
   };
 
   return (
-    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-purple-100 p-10">
+    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-purple-100 p-5">
       <div className="flex flex-col justify-center relative overflow-hidden">
         <div className="relative">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/30 border border-indigo-400/30 mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/30 border border-indigo-400/30 mb-2">
             <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
             <span className="text-xs font-semibold tracking-wide">
               v2.5 Enterprise
             </span>
           </div>
-          <h1 className="text-5xl mb-6">Contract Intelligence Platform</h1>
-          <p className="text-lg mb-5">
+          <h1 className="text-5xl leading-16 mb-2 bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            Contract Intelligence Platform
+          </h1>
+          <p className="text-lg mb-2">
             Automated compliance verification powered by advanced RAG
             technology.
             <br />
@@ -71,7 +73,7 @@ export function FileUpload({
           </p>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 mt-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4 mt-2">
         {/* Excel Upload */}
         <div>
           <label className="block text-gray-700 mb-3">
@@ -92,7 +94,7 @@ export function FileUpload({
             />
             <label
               htmlFor="excel-upload"
-              className={`flex flex-col items-center justify-center gap-3 p-6 border-2 border-dashed rounded-xl cursor-pointer transition-all min-h-[140px] ${
+              className={`flex flex-col items-center justify-center gap-3 p-3 border-2 border-dashed rounded-xl cursor-pointer transition-all min-h-[140px] ${
                 excelFile
                   ? "border-green-400 bg-linear-to-br from-green-50 to-emerald-50 shadow-md"
                   : "border-purple-200 hover:border-purple-400 bg-linear-to-br from-purple-50 to-pink-50 hover:shadow-lg"
@@ -160,7 +162,7 @@ export function FileUpload({
             />
             <label
               htmlFor="pdf-upload"
-              className={`flex flex-col items-center justify-center gap-3 p-6 border-2 border-dashed rounded-xl cursor-pointer transition-all min-h-[140px] ${
+              className={`flex flex-col items-center justify-center gap-3 p-3 border-2 border-dashed rounded-xl cursor-pointer transition-all min-h-[140px] ${
                 pdfFile
                   ? "border-green-400 bg-linear-to-br from-green-50 to-emerald-50 shadow-md"
                   : "border-purple-200 hover:border-purple-400 bg-linear-to-br from-purple-50 to-pink-50 hover:shadow-lg"

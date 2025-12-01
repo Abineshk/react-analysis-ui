@@ -1,14 +1,10 @@
-import { CheckCircle, Cpu, FileX, Lightbulb } from "lucide-react";
 import { useState } from "react";
 import RadialHealthChart from "../charts/RadialHealthChart";
 import StatusBarChart from "../charts/StatusBarChart";
 import { ItemsList } from "./ItemsList";
 import { PdfContainer } from "./pdf/PdfContainer";
 import ChartContainer from "./reusable/ChartContainer";
-import { ScoreBar } from "./reusable/ScoreBar";
-import SearchBox from "./reusable/SearchBox";
 import StatCard from "./StatCard";
-import { StatusBadge } from "./StatusBadge";
 import { TabsPanel } from "./TabsPanel";
 
 interface AnalysisResultsProps {
@@ -122,21 +118,7 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
 
   const handleChangeObligation = (obligation: any) => {
     setSelectedObligation(obligation);
-    setSelectedClause("");
-  };
-
-  const [openItemId, setOpenItemId] = useState<number | null>(null);
-  const [selectedTab, setSelectedTab] = useState("details");
-  // const [selectedClause, setSelectedClause] = useState(null);
-
-  const toggleItem = (id: any) => {
-    setOpenItemId((openItemId) => (openItemId === id ? null : id));
-    setSelectedTab("details"); // reset tab when switching items
-  };
-
-  const handleChangeTab = (tab: string) => {
-    setSelectedTab(tab);
-    setSelectedClause("");
+    setSelectedClause(obligation.supporting_clauses.join("\n"));
   };
 
   const getScoreContent = (score: number) => {
@@ -144,18 +126,6 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
     if (score > 50) return { color: "text-red-600", text: "Average" };
     return { color: "text-green-600", text: "Good" };
   };
-
-  const scoreContent = getScoreContent(93);
-
-  const changeClause = (clause: string) => {
-    setSelectedClause(clause);
-  };
-
-  const [searchText, setSearchText] = useState("");
-
-  const filterAnalysisResultsData = analysisData.results.filter((res: any) =>
-    res?.obligation?.toLowerCase().includes(searchText?.toLowerCase() || "")
-  );
 
   return (
     <div>
@@ -247,18 +217,18 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-5">
-          {/* LEFT PANEL: Accordion + Tabs */}
+        {/* <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-5">
+          {/* LEFT PANEL: Accordion + Tabs 
           <div className="lg:col-span-5">
             <div className="bg-white/90 backdrop-blur-sm border border-purple-200 rounded-xl p-4 h-[600px] flex flex-col shadow-lg">
-              {/* Header */}
+              {/* Header 
               <div className="mb-4 pb-3 border-b border-purple-200">
                 <span className="text-gray-900 text-lg font-medium">
                   Obligations
                 </span>
               </div>
 
-              {/* Filter/Search Section */}
+              {/* Filter/Search Section 
               <div className="mb-3">
                 <SearchBox
                   searchText={searchText}
@@ -266,7 +236,7 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
                 />
               </div>
 
-              {/* Scrollable Content */}
+              {/* Scrollable Content 
               <div
                 className="flex-1 overflow-y-auto space-y-2"
                 style={{
@@ -280,7 +250,7 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
                       key={item.id}
                       className="p-1 border-b border-purple-200 rounded-md"
                     >
-                      {/* Item Header */}
+                      {/* Item Header 
                       <button
                         onClick={() => {
                           toggleItem(item.id);
@@ -302,7 +272,7 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
                           <div className="flex items-center">
                             {/* <span className="text-[12px] pr-3 font-medium text-slate-600">
                               {item.confidence}%
-                            </span> */}
+                            </span> 
                             <svg
                               className={`h-6 w-6 ml-2 text-gray-600 transform transition-transform duration-300 ${
                                 openItemId === item.id
@@ -333,7 +303,7 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
                         </p>
                       </button>
 
-                      {/* Accordion Content */}
+                      {/* Accordion Content 
                       <div
                         className={`transition-all duration-500 ease-in-out ${
                           openItemId === item.id
@@ -343,7 +313,7 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
                       >
                         {openItemId === item.id && (
                           <div className="border border-gray-50 rounded-xl mb-2 mt-2 p-2 bg-white shadow-sm">
-                            {/* Tabs design */}
+                            {/* Tabs design 
                             <div className="flex mb-4 mt-2">
                               {["details", "evidence", "suggestion"].map(
                                 (tab) => (
@@ -368,7 +338,7 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
                             </div>
 
                             {/* Tabs */}
-                            {/* <div className="flex mb-4 mt-2 border-b border-gray-300 overflow-x-auto whitespace-nowrap m-1">
+        {/* <div className="flex mb-4 mt-2 border-b border-gray-300 overflow-x-auto whitespace-nowrap m-1">
                             {["details", "evidence", "suggestion"].map(
                               (tab) => (
                                 <button
@@ -386,8 +356,8 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
                             )}
                           </div> */}
 
-                            {/* New Tabs */}
-                            {/* <div className="flex gap-1 mb-4 bg-purple-100 rounded-lg p-1 mt-1">
+        {/* New Tabs */}
+        {/* <div className="flex gap-1 mb-4 bg-purple-100 rounded-lg p-1 mt-1">
                             {["details", "evidence", "suggestion"].map(
                               (tab) => (
                                 <button
@@ -408,9 +378,9 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
                                 </button>
                               )
                             )}
-                          </div> */}
+                          </div> 
 
-                            {/* Tab Content */}
+                            {/* Tab Content 
                             <div className="p-1">
                               {selectedTab === "details" && (
                                 <div className="space-y-4 fade-in">
@@ -572,7 +542,7 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
             </div>
           </div>
 
-          {/* RIGHT PANEL: PDF Viewer */}
+          {/* RIGHT PANEL: PDF Viewer 
           <div className="lg:col-span-7">
             <PdfContainer
               file={pdfFile}
@@ -580,7 +550,7 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
               defaultScale={1}
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

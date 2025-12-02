@@ -21,20 +21,20 @@ const RadialHealthChart: React.FC<RadialHealthChartProps> = ({
     <div className="h-full relative" ref={ref}>
       {/* Center Text */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-3xl font-semibold text-gray-800 mb-10">
+        <span className="text-2xl font-semibold text-gray-800 mb-10">
           {value}%
         </span>
       </div>
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center mt-16">
-        <span className="text-xl text-gray-700">Health Score</span>
+      <div className="absolute inset-0 flex flex-col items-center justify-center mt-13">
+        <span className="text-lg text-gray-700">Health Score</span>
       </div>
 
       <ResponsiveContainer>
         <RadialBarChart
           cx="50%"
           cy="50%"
-          innerRadius="80%"
+          innerRadius="100%"
           barSize={20}
           data={radialData}
           startAngle={180}
@@ -54,4 +54,4 @@ const RadialHealthChart: React.FC<RadialHealthChartProps> = ({
   );
 };
 
-export default RadialHealthChart;
+export { RadialHealthChart };

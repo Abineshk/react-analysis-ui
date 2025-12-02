@@ -1,6 +1,6 @@
 import { useState } from "react";
-import RadialHealthChart from "../charts/RadialHealthChart";
-import StatusBarChart from "../charts/StatusBarChart";
+import { RadialHealthChart } from "../charts/RadialHealthChart";
+import { StatusBarChart } from "../charts/StatusBarChart";
 import { ItemsList } from "./ItemsList";
 import { PdfContainer } from "./pdf/PdfContainer";
 import ChartContainer from "./reusable/ChartContainer";
@@ -59,11 +59,7 @@ memory.`,
       similarity_score: 50,
       keyword_hits: ["sam", "sam", "Sfsf"],
       reason: "dsmsfbowrf 0jifj 0j wrf-9j w9fj",
-      supporting_clauses: [
-        "sfsf wrffwsfwsfwf",
-        "Afsfsfgwgf sfw fwsfw wrf wrfw rf",
-        "afsafsfwffsa",
-      ],
+      supporting_clauses: [`term`, `intellectual`],
     },
     {
       id: 4,
@@ -146,42 +142,46 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <StatCard
-            label="Total Obligations"
-            value={200}
-            fromColor="from-purple-500"
-            toColor="to-purple-600"
-            labelColor="text-purple-100"
-            icon="📊"
-          />
-          <StatCard
-            label="Compliant Items"
-            value={150}
-            fromColor="from-green-500"
-            toColor="to-green-600"
-            labelColor="text-green-100"
-            icon="✓"
-          />
-          <StatCard
-            label="Non Compliant Items"
-            value={50}
-            fromColor="from-red-500"
-            toColor="to-red-600"
-            labelColor="text-red-100"
-            icon="⚠"
-          />
-          <StatCard
-            label="Processing Time"
-            value="3.2s"
-            fromColor="from-blue-500"
-            toColor="to-blue-600"
-            labelColor="text-blue-100"
-            icon="⚡"
-          />
-        </div>
-        {/* Charts Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6  mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="flex flex-col gap-2">
+              <StatCard
+                label="Total Obligations"
+                value={200}
+                fromColor="from-purple-500"
+                toColor="to-purple-600"
+                labelColor="text-purple-100"
+                icon="📊"
+              />
+              <StatCard
+                label="Compliant"
+                value={150}
+                fromColor="from-green-500"
+                toColor="to-green-600"
+                labelColor="text-green-100"
+                icon="✓"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <StatCard
+                label="Non Compliant"
+                value={50}
+                fromColor="from-red-500"
+                toColor="to-red-600"
+                labelColor="text-red-100"
+                icon="⚠"
+              />
+              <StatCard
+                label="Processing Time"
+                value="3.2s"
+                fromColor="from-blue-500"
+                toColor="to-blue-600"
+                labelColor="text-blue-100"
+                icon="⚡"
+              />
+            </div>
+          </div>
           <ChartContainer title="Overall Health">
             <RadialHealthChart value={75} radialData={radialData} />
           </ChartContainer>
@@ -203,7 +203,13 @@ export function AnalysisResults({ pdfFile }: AnalysisResultsProps) {
           </div>
 
           {/* Center: PDF Viewer */}
-          <div className="lg:col-span-5">
+          <div
+            className={`lg:col-span-5 pdf-highlight-${
+              selectedObligation?.is_present === "Yes"
+                ? "compliance"
+                : "non-compliance"
+            }`}
+          >
             <PdfContainer file={pdfFile} selectedClause={selectedClause} />
           </div>
 

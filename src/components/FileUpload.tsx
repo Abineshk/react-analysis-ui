@@ -73,7 +73,7 @@ export function FileUpload({
           </p>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4 mt-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4 mt-6">
         {/* Excel Upload */}
         <div>
           <label className="block text-gray-700 mb-3">
@@ -94,16 +94,16 @@ export function FileUpload({
             />
             <label
               htmlFor="excel-upload"
-              className={`flex flex-col items-center justify-center gap-3 p-3 border-2 border-dashed rounded-xl cursor-pointer transition-all min-h-[140px] ${
+              className={`flex flex-col items-center justify-center gap-3 p-3 border-2 border-dashed rounded-xl cursor-pointer transition-all min-h-10 ${
                 excelFile
                   ? "border-green-400 bg-linear-to-br from-green-50 to-emerald-50 shadow-md"
                   : "border-purple-200 hover:border-purple-400 bg-linear-to-br from-purple-50 to-pink-50 hover:shadow-lg"
               } ${isAnalyzing ? "opacity-50 cursor-not-allowed" : ""}`}
             >
               {excelFile ? (
-                <>
-                  <div className="w-16 h-16 bg-green-200 rounded-full flex items-center justify-center">
-                    <FileSpreadsheet className="w-8 h-8 text-green-600" />
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center">
+                    <FileSpreadsheet className="w-6 h-6 text-green-600" />
                   </div>
                   <div className="text-center flex-1">
                     <p className="text-green-900 truncate max-w-[200px]">
@@ -124,11 +124,11 @@ export function FileUpload({
                   >
                     <X className="w-4 h-4 text-gray-500 hover:text-gray-700 cursor-pointer" />
                   </button>
-                </>
+                </div>
               ) : (
-                <>
-                  <div className="w-16 h-16 bg-purple-200 rounded-full flex items-center justify-center">
-                    <Upload className="w-8 h-8 text-purple-600" />
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center">
+                    <Upload className="w-6 h-6 text-purple-600" />
                   </div>
                   <div className="text-center">
                     <p className="text-gray-700">Drop Excel file here</p>
@@ -136,7 +136,7 @@ export function FileUpload({
                       or click to browse
                     </p>
                   </div>
-                </>
+                </div>
               )}
             </label>
           </div>
@@ -162,16 +162,16 @@ export function FileUpload({
             />
             <label
               htmlFor="pdf-upload"
-              className={`flex flex-col items-center justify-center gap-3 p-3 border-2 border-dashed rounded-xl cursor-pointer transition-all min-h-[140px] ${
+              className={`flex flex-col items-center justify-center gap-3 p-3 border-2 border-dashed rounded-xl cursor-pointer transition-all min-h-10 ${
                 pdfFile
                   ? "border-green-400 bg-linear-to-br from-green-50 to-emerald-50 shadow-md"
                   : "border-purple-200 hover:border-purple-400 bg-linear-to-br from-purple-50 to-pink-50 hover:shadow-lg"
               } ${isAnalyzing ? "opacity-50 cursor-not-allowed" : ""}`}
             >
               {pdfFile ? (
-                <>
-                  <div className="w-16 h-16 bg-green-200 rounded-full flex items-center justify-center">
-                    <FileText className="w-8 h-8 text-green-600" />
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center">
+                    <FileText className="w-6 h-6 text-green-600" />
                   </div>
                   <div className="text-center flex-1">
                     <p className="text-green-900 truncate max-w-[200px]">
@@ -192,11 +192,11 @@ export function FileUpload({
                   >
                     <X className="w-4 h-4 text-gray-500 hover:text-gray-700 cursor-pointer" />
                   </button>
-                </>
+                </div>
               ) : (
-                <>
-                  <div className="w-16 h-16 bg-purple-200 rounded-full flex items-center justify-center">
-                    <Upload className="w-8 h-8 text-purple-600" />
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center">
+                    <Upload className="w-6 h-6 text-purple-600" />
                   </div>
                   <div className="text-center">
                     <p className="text-gray-700">Drop PDF file here</p>
@@ -204,7 +204,7 @@ export function FileUpload({
                       or click to browse
                     </p>
                   </div>
-                </>
+                </div>
               )}
             </label>
           </div>

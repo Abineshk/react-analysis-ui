@@ -43,7 +43,7 @@ const StatusBarChart: React.FC<StatusBarChartProps> = ({ data }) => {
         <BarChart
           data={data}
           layout="vertical"
-          margin={{ top: 10, right: 10, left: 10, bottom: 50 }}
+          margin={{ top: 15, right: 10, left: 10, bottom: 80 }}
         >
           <XAxis type="number" hide />
           <YAxis
@@ -58,7 +58,7 @@ const StatusBarChart: React.FC<StatusBarChartProps> = ({ data }) => {
 
           <Bar
             dataKey="value"
-            barSize={18}
+            barSize={15}
             radius={[0, 10, 10, 0]}
             isAnimationActive={visible} // enable animation
             animationDuration={5000}
@@ -71,7 +71,7 @@ const StatusBarChart: React.FC<StatusBarChartProps> = ({ data }) => {
 
           <Legend
             verticalAlign="bottom"
-            height={30}
+            height={6}
             payload={data.map((d) => ({
               color: d.fill,
               type: "circle",
@@ -84,4 +84,4 @@ const StatusBarChart: React.FC<StatusBarChartProps> = ({ data }) => {
   );
 };
 
-export default StatusBarChart;
+export { StatusBarChart };
